@@ -17,7 +17,7 @@ export default class FileUpload {
   }
 
   uploadFile(file){
-    
+    console.log("File");
     try {
       this.checkFile(file);
     } catch( err ){
