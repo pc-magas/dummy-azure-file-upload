@@ -5,6 +5,7 @@ import FileUpload from '../lib/FileUpload.js'
 const File = new Mongo.Collection('file');
 
 Meteor.methods({
+
   'file.uploadFile'(file): {
       console.log("File To be uploaded",file)
       var FileUpload=new FileUpload();
@@ -16,4 +17,4 @@ Meteor.methods({
 
       return response
   }
-})
+});

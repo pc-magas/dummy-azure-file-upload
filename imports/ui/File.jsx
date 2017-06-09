@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { UploadedFile } from '../api/FileUpload.js';
 
 class File extends Component {
 
@@ -7,7 +8,7 @@ class File extends Component {
     var targetElem=e.target
     files = document.getElementById('fileUpload');
     file = files.files[0]
-    AzureFile.upload(file,'file.uploadFile',function(err,value){
+    AzureFile.upload(file,'fileStorage.uploadFile',function(err,value){
         if(err){
           console.log(err)
           throw err;
