@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { HTTP } from 'meteor/http'
 
+export const UploadedFile=null;
 
 if(Meteor.isServer){
   Meteor.methods({
-    'server.fileStorage.uploadFile':function(base64Data,name,mime) {
+    'fileStorage.uploadFile'(base64Data,name,mime) {
         // this.unblock();
         let http_obj={
           'data':{
@@ -12,19 +13,13 @@ if(Meteor.isServer){
             'name':name,
             'mime':mime
           },
+          // 'timeout':2000,
+          'headers':{
+            'Content-Type': 'application/json'
+          }
         }
 
         return HTTP.call("POST","http://localhost/base64Upload/",http_obj);
-    }
-  });
-}
-
-if(Meteor.isClient){
-  Meteor.methods({
-    'fileStorage.uploadFile':function(base64Data,name,mime) {
-      Meteor.call('server.fileStorage.uploadFile',base64Data,name,mime,function(error,result){
-        console.log(result);
-      });
     }
   });
 }

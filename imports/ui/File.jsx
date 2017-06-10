@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import '../api/FileUpload.js';
 
 class File extends Component {
 
@@ -11,7 +10,9 @@ class File extends Component {
     var reader=new FileReader();
 
     reader.onloadend = function() {
-      Meteor.call('fileStorage.uploadFile',reader.result,file.name,file.type)
+      Meteor.call('fileStorage.uploadFile',reader.result,file.name,file.type,function(err,response){
+        console.log(response);
+      })
     }
 
     reader.readAsDataURL(file);
