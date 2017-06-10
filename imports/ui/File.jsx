@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 
 class File extends Component {
 
@@ -21,11 +22,9 @@ class File extends Component {
   render() {
     return (
       <form onSubmit={ this.changeFile.bind(this) }>
-        <label>
-          <input id="fileUpload" type="file" name="file" />
-        </label>
-
-        <button type="submit">UploadFile</button>
+        <label htmlFor="fileUpload"><Button bsStyle="link" >Click to select the file</Button></label>
+        <input id="fileUpload" className="hidden" type="file" name="file" />
+        <Button type="submit">UploadFile</Button>
       </form>
     )
   }
