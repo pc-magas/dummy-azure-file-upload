@@ -5,17 +5,20 @@ class File extends Component {
 
   changeFile(e) {
     e.preventDefault()
-    var targetElem=e.target
-    files = document.getElementById('fileUpload');
-    file = files.files[0]
-    AzureFile.upload(file,'fileStorage.uploadFile',function(err,value){
-        if(err){
-          console.log(err)
-          throw err;
-          return;
-        }
-        console.log(value);
-    });
+    let files = document.getElementById('fileUpload');
+    var file = files.files[0];
+
+    var reader=new FileReader();
+
+    reader.onloadend = function() {
+      // console.log('Reader',reader);
+      // console.log('File',file.name);
+      // console.log('File',file.type);
+      // console.log('RESULT', reader.result)
+      Meteor.call('fileStorage.uploadFile',reader.result,file.name,file.type)
+    }
+
+    reader.readAsDataURL(file);
   }
 
   render() {

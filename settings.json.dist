@@ -1,7 +1,7 @@
 {
-    "azure":{
-      "container":"The container to store the data",
-      "account":"The account name",
-      "key":"The key that is used for authentication"
+    "public":{
+      "upload":{
+        "url":"#The url to upload the file"
+      }
     }
 }
