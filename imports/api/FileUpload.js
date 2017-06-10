@@ -1,28 +1,30 @@
 import { Meteor } from 'meteor/meteor';
-import { Mongo } from 'meteor/mongo';
-// import { HTTP } from 'meteor/http'
+import { HTTP } from 'meteor/http'
 
 
-const UploadedFile = new Mongo.Collection('file');
+if(Meteor.isServer){
+  Meteor.methods({
+    'server.fileStorage.uploadFile':function(base64Data,name,mime) {
+        // this.unblock();
+        let http_obj={
+          'data':{
+            'data':base64Data,
+            'name':name,
+            'mime':mime
+          },
+        }
 
-Meteor.methods({
-  'fileStorage.uploadFile'(base64Data,name,mime) {
-      if (base64Data === void 0) {
-          throw new Meteor.Error(500, "Missing File", "", "");
-      }
-      let http_obj={
-        'data':{
-          'data':base64Data,
-          'name':name,
-          'mime':mime
-        },
-      }
-      // console.log(FileUploadSetings.url);
-      Meteor.http.post("http://localhost/base64Upload/",http_obj,function(error,result){
-          if(!error){
-            console.log(result);
-          }
-          console.log(error);
-      })
-  }
-});
+        return HTTP.call("POST","http://localhost/base64Upload/",http_obj);
+    }
+  });
+}
+
+if(Meteor.isClient){
+  Meteor.methods({
+    'fileStorage.uploadFile':function(base64Data,name,mime) {
+      Meteor.call('server.fileStorage.uploadFile',base64Data,name,mime,function(error,result){
+        console.log(result);
+      });
+    }
+  });
+}
