@@ -19,7 +19,11 @@ if(Meteor.isServer){
           }
         }
 
-        return HTTP.call("POST","http://localhost/base64Upload/",http_obj);
+        try {
+          return HTTP.call("POST","http://localhost/base64Upload/",http_obj);
+        } catch(err){
+          throw err;
+        }
     }
   });
 }

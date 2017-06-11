@@ -3,32 +3,49 @@ import { Button } from 'react-bootstrap';
 
 class File extends Component {
 
-  changeFile(e) {
-    e.preventDefault()
-    let files = document.getElementById('fileUpload');
-    var file = files.files[0];
+  constructor(){
+    super()
+    this.state={
+      message:"Hello"
+    }
+  }
 
-    var reader=new FileReader();
+  uploadFile(e) {
+     e.preventDefault()
+     let files = document.getElementById('fileUpload');
+     var file = files.files[0];
+
+     var reader=new FileReader();
 
     reader.onloadend = function() {
-      Meteor.call('fileStorage.uploadFile',reader.result,file.name,file.type,function(err,response){
-        console.log(response);
+      Meteor.call('fileStorage.uploadFile',file,file.name,file.type,(err,response)=>{
+          console.log(response);
+          if(err){
+            return this.setState({'message':"Upload fail"});
+          }
+          this.setState({'message':"Upload success"});
       })
     }
-
     reader.readAsDataURL(file);
   }
 
+
+
   render() {
+
     return (
-      <form onSubmit={ this.changeFile.bind(this) }>
-        <label htmlFor="fileUpload"><Button bsStyle="link" >Click to select the file</Button></label>
-        <input id="fileUpload" className="hidden" type="file" name="file" />
-        <Button type="submit">UploadFile</Button>
-      </form>
+      <div>
+        <form onSubmit={ this.uploadFile.bind(this) }>
+          <label className="btn btn-primary" htmlFor="fileUpload">Click to select the file</label>
+          <input id="fileUpload" className="hidden" type="file" name="file" />
+          <Button type="submit">UploadFile</Button>
+        </form>
+        <span> {this.state.message} </span>
+      </div>
     )
   }
 
 }
+
 
 export default File;
