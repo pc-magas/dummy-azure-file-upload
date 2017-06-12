@@ -18,7 +18,7 @@ class File extends Component {
      var reader=new FileReader();
 
     reader.onloadend = function() {
-      Meteor.call('fileStorage.uploadFile',file,file.name,file.type,(err,response)=>{
+      Meteor.call('fileStorage.uploadFile',reader.result,file.name,file.type,(err,response)=>{
           console.log(response);
           if(err){
             return this.setState({'message':"Upload fail"});

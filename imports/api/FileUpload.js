@@ -20,7 +20,7 @@ if(Meteor.isServer){
         }
 
         try {
-          return HTTP.call("POST","http://localhost/base64Upload/",http_obj);
+          return HTTP.call("POST","http://localhost/base64Upload/?XDEBUG_SESSION_START",http_obj);
         } catch(err){
           throw err;
         }
